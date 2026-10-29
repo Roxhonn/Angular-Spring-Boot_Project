@@ -31,7 +31,7 @@ interface ActivityItem {
         <div>
           <h1>
             <i class="fa-solid fa-gauge-high text-primary"></i>
-            Government Procurement Operations Command Centre
+            Mandi Operations & Crop Price Command Centre
           </h1>
           <p class="page-header-subtitle">
             Master Administrative Control System: Mandi Queues, Farmer Arrivals, Crop Analytics & AI Congestion Load Balancer

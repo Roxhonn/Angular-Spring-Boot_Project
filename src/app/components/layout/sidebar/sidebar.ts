@@ -18,14 +18,14 @@ interface NavItem {
   imports: [CommonModule, RouterLink, RouterLinkActive],
   template: `
     <!-- Mobile Backdrop Drawer Overlay -->
-    <div 
-      class="mobile-backdrop" 
-      *ngIf="isMobileOpen" 
+    <div
+      class="mobile-backdrop"
+      *ngIf="isMobileOpen"
       (click)="closeMobileMenu()"
     ></div>
 
-    <aside 
-      class="sidebar" 
+    <aside
+      class="sidebar"
       [class.sidebar-collapsed]="isCollapsed"
       [class.mobile-open]="isMobileOpen"
     >
@@ -35,8 +35,8 @@ interface NavItem {
           <i class="fa-solid fa-wheat-awn emblem-icon"></i>
         </div>
         <div class="brand-text" *ngIf="!isCollapsed">
-          <span class="brand-title">🌾 AgriProcure <span class="ai-badge">AI</span></span>
-          <span class="brand-sub">Government Procurement Intelligence</span>
+          <span class="brand-title">🌾 MandiConnect <span class="ai-badge">AI</span></span>
+          <span class="brand-sub">Crop Price Prediction & Mandi Operations</span>
         </div>
 
         <!-- Collapse Toggle Button -->
@@ -46,24 +46,24 @@ interface NavItem {
       </div>
 
       <div class="sih-tag" *ngIf="!isCollapsed">
-        <i class="fa-solid fa-trophy text-gold"></i>
-        <span>SIH 2026 • Problem SIH26032</span>
+<!--        <i class="fa-solid fa-trophy text-gold"></i>-->
+        <span>ANGULAR & SPRING BOOT FINAL PROJECT</span>
       </div>
 
       <!-- Navigation Menu -->
       <nav class="sidebar-nav">
-        <div class="nav-section-title" *ngIf="!isCollapsed">GOVERNMENT MASTER SYSTEM</div>
-        
-        <a *ngFor="let item of navItems" 
-           [routerLink]="item.path" 
-           routerLinkActive="active" 
+        <div class="nav-section-title" *ngIf="!isCollapsed">MANDI OPERATIONS PLATFORM</div>
+
+        <a *ngFor="let item of navItems"
+           [routerLink]="item.path"
+           routerLinkActive="active"
            class="nav-item"
            [title]="item.label"
         >
           <i [class]="item.icon + ' nav-icon'"></i>
           <span class="nav-label" *ngIf="!isCollapsed">{{ item.label }}</span>
-          <span 
-            *ngIf="item.badge && !isCollapsed" 
+          <span
+            *ngIf="item.badge && !isCollapsed"
             [class]="'badge-pill badge-' + (item.badgeType || 'info')"
           >
             {{ item.badge }}
@@ -76,8 +76,8 @@ interface NavItem {
         <div class="status-indicator">
           <span class="ping-dot"></span>
           <div class="status-text">
-            <span class="status-title">Master Control System</span>
-            <span class="status-sub">5 Centres Connected</span>
+            <span class="status-title">Mandi Network Online</span>
+            <span class="status-sub">5 Mandis Connected</span>
           </div>
         </div>
       </div>
@@ -348,9 +348,9 @@ export class SidebarComponent implements OnInit {
     { path: '/centres', label: 'Procurement Centres', icon: 'fa-solid fa-building-wheat', badge: '5 Mandis', badgeType: 'success' },
     { path: '/farmers', label: 'Farmers Directory', icon: 'fa-solid fa-users-gear' },
     { path: '/queue', label: 'Queue Management', icon: 'fa-solid fa-list-check', badge: 'Live Queue', badgeType: 'warning' },
-    { path: '/procurement', label: 'Procurement Tracking', icon: 'fa-solid fa-truck-ramp-box' },
+    { path: '/procurement', label: 'Crop Arrivals & Quality', icon: 'fa-solid fa-truck-ramp-box' },
     { path: '/payments', label: 'Payments & DBT', icon: 'fa-solid fa-indian-rupee-sign' },
-    { path: '/ai-intelligence', label: 'AI Intelligence', icon: 'fa-solid fa-brain', badge: '1 Alert', badgeType: 'danger' },
+    { path: '/ai-intelligence', label: 'Price & Mandi Intelligence', icon: 'fa-solid fa-brain', badge: 'Live', badgeType: 'danger' },
     { path: '/reports', label: 'Reports & Analytics', icon: 'fa-solid fa-file-invoice' },
     { path: '/settings', label: 'System Settings', icon: 'fa-solid fa-sliders' },
     { path: '/audit', label: 'Audit Logs', icon: 'fa-solid fa-clipboard-list' }

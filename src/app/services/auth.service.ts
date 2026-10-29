@@ -16,7 +16,7 @@ export class AuthService {
     id: 'GOV-001',
     name: 'Shri R.K. Sharma',
     role: 'GOVERNMENT_ADMIN',
-    department: 'Government Procurement Operations',
+    department: 'Mandi Operations & Price Intelligence',
     avatarText: 'RK',
     email: 'rk.sharma@gov.in'
   };

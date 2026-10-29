@@ -1,7 +1,7 @@
-# AgriProcure AI — Government/Admin Portal
+# MandiConnect AI — Crop Price Prediction & Mandi Connect Platform
 
-**AgroAi Prototype** for Smart India Hackathon 2026 (SIH Problem Statement SIH26032: Farmer Procurement Scheduling & Status Intelligence).
-Ministry of Consumer Affairs, Food & Public Distribution.
+College final project prototype for Smart India Hackathon 2026 (SIH26032: Farmer Procurement Scheduling & Status Intelligence).
+It demonstrates crop-price forecasting, mandi operations, farmer scheduling, and procurement-status visibility using simulated data.
 
 ## Development server
 
