@@ -2,6 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProcurementService } from '../../services/procurement.service';
 import { AIAlert } from '../../models/procurement.model';
+import { CropPriceForecastDto, MandiApiService } from '../../services/mandi-api.service';
+
+interface CropPriceForecast extends CropPriceForecastDto {
+  crop: string;
+  currentPricePerQuintal: number;
+  predictedPricePerQuintal: number;
+}
 
 @Component({
   selector: 'app-ai-intelligence',
@@ -11,10 +18,28 @@ import { AIAlert } from '../../models/procurement.model';
     <div class="page-wrapper">
       <div class="page-header-title">
         <div>
-          <h1><i class="fa-solid fa-brain text-primary"></i> AI Congestion Intelligence & Load Balancer</h1>
-          <p class="page-header-subtitle">Predictive Queue Bottlenecks, Automated Rerouting & Weather Arrival Models</p>
+          <h1><i class="fa-solid fa-chart-line text-primary"></i> Crop Price & Mandi Intelligence</h1>
+          <p class="page-header-subtitle">Crop-price forecasts, demand signals, queue bottlenecks and Mandi load balancing</p>
         </div>
         <span class="badge badge-purple">ML Simulation Active</span>
+      </div>
+
+      <div class="forecast-grid">
+        <article class="forecast-card" *ngFor="let forecast of priceForecasts">
+          <div class="forecast-topline">
+            <span class="crop-name">{{ forecast.crop }}</span>
+            <span class="signal" [class.signal-up]="forecast.signal === 'UPWARD'" [class.signal-stable]="forecast.signal === 'STABLE'" [class.signal-caution]="forecast.signal === 'CAUTION'">
+              {{ forecast.signal }}
+            </span>
+          </div>
+          <div class="price-row">
+            <strong>₹{{ forecast.predictedPricePerQuintal | number }}/qtl</strong>
+            <span [class.price-up]="forecast.changePercent > 0" [class.price-down]="forecast.changePercent < 0">
+              {{ forecast.changePercent > 0 ? '+' : '' }}{{ forecast.changePercent }}%
+            </span>
+          </div>
+          <p>Current: ₹{{ forecast.currentPricePerQuintal | number }}/qtl · {{ forecast.market }}</p>
+        </article>
       </div>
 
       <div class="agri-card mb-6">
@@ -59,14 +84,28 @@ import { AIAlert } from '../../models/procurement.model';
       <div class="phase2-banner">
         <i class="fa-solid fa-microchip phase2-icon"></i>
         <div>
-          <h3>Phase 2 Deep Learning Traffic Model</h3>
-          <p>Real-time Python PyTorch/TensorFlow Mandi arrival models utilizing ISRO satellite weather data will be integrated in Phase 2.</p>
+          <h3>Prototype Forecasting Note</h3>
+          <p>Prices and recommendations shown here are simulated demo data. The Spring Boot service can later connect this screen to market-arrival, weather and historical mandi-price APIs.</p>
         </div>
       </div>
     </div>
   `,
   styles: [`
     .alert-list { display: flex; flex-direction: column; gap: 16px; }
+    .forecast-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .forecast-card { background: #ffffff; border: 1px solid var(--border-card); border-radius: 14px; padding: 16px; box-shadow: var(--shadow-sm); }
+    .forecast-topline, .price-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .crop-name { color: var(--slate-900); font-size: 0.95rem; font-weight: 800; }
+    .signal { border-radius: 999px; padding: 3px 8px; font-size: 0.65rem; font-weight: 800; letter-spacing: 0.03em; }
+    .signal-up { background: #D1FAE5; color: #047857; }
+    .signal-stable { background: #DBEAFE; color: #1D4ED8; }
+    .signal-caution { background: #FEF3C7; color: #B45309; }
+    .price-row { margin: 12px 0 5px; }
+    .price-row strong { color: var(--primary-700); font-size: 1.12rem; }
+    .price-row span { font-size: 0.78rem; font-weight: 800; }
+    .price-up { color: #059669; }
+    .price-down { color: #DC2626; }
+    .forecast-card p { color: var(--text-muted); font-size: 0.75rem; }
     .alert-box { background: #ffffff; border: 1px solid var(--border-light); border-radius: 12px; padding: 20px; }
     .alert-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
     .rec-section { background: #f8faf9; border-left: 4px solid var(--primary-600); padding: 12px; border-radius: 6px; margin-top: 12px; font-size: 0.875rem; }
@@ -86,15 +125,32 @@ import { AIAlert } from '../../models/procurement.model';
       box-shadow: var(--shadow-sm);
     }
     .phase2-icon { font-size: 2.2rem; color: var(--primary-700); }
+    @media (max-width: 1000px) { .forecast-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .forecast-grid { grid-template-columns: 1fr; } }
   `]
 })
 export class AiIntelligenceComponent implements OnInit {
   alerts: AIAlert[] = [];
+  priceForecasts: CropPriceForecast[] = [
+    { crop: 'Paddy', currentPricePerQuintal: 2310, predictedPricePerQuintal: 2380, changePercent: 3.0, market: 'Karnal Mandi', signal: 'UPWARD' },
+    { crop: 'Wheat', currentPricePerQuintal: 2425, predictedPricePerQuintal: 2440, changePercent: 0.6, market: 'Panipat Mandi', signal: 'STABLE' },
+    { crop: 'Mustard', currentPricePerQuintal: 5680, predictedPricePerQuintal: 5795, changePercent: 2.0, market: 'Kurukshetra Mandi', signal: 'UPWARD' },
+    { crop: 'Cotton', currentPricePerQuintal: 6890, predictedPricePerQuintal: 6750, changePercent: -2.0, market: 'Ambala Mandi', signal: 'CAUTION' }
+  ];
 
-  constructor(private procurementService: ProcurementService) {}
+  constructor(
+    private procurementService: ProcurementService,
+    private mandiApiService: MandiApiService
+  ) {}
 
   ngOnInit() {
     this.procurementService.getAIAlerts().subscribe(data => this.alerts = data);
+    this.mandiApiService.getCropPriceForecasts().subscribe({
+      next: (forecasts) => this.priceForecasts = forecasts,
+      error: () => {
+        // Demo fallback remains visible until the Spring Boot API is running.
+      }
+    });
   }
 
   execute(id: string) {
