@@ -27,7 +27,7 @@ The application includes multiple frontend modules for managing **dashboard oper
 
 ---
 
-## 🛠️ Technologies Used
+## 🛠️ Technologie Used
 
 ### Framework
 
