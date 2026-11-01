@@ -3,108 +3,141 @@
 
 ## Mandi Connect and Crop Price Prediction Platform
 
-**Mandi-Connect-AI** is a smart agriculture-based full-stack web application designed to connect **farmers, mandi procurement centres, and crop market information** through a centralized digital platform.
+**Mandi-Connect-AI** is a smart agriculture-based **frontend web application** developed using **Angular**. The project provides a modern and interactive digital interface for managing and visualizing mandi procurement operations and agricultural information.
 
-The platform helps improve mandi operations by providing **crop price forecasts, farmer records, procurement centre management, token and queue monitoring, and operational dashboard information** through an integrated web application.
+The application includes multiple frontend modules for managing **dashboard operations, farmers, procurement centres, queues, payments, reports, AI intelligence, audits, and other mandi-related activities**.
 
 ---
 
-## 🚀 Features
+## 🚀 Frontend Features
 
-- 🌾 Crop Price Prediction
-- 📊 Live Crop Price Forecasts
-- 👨‍🌾 Farmer Record Management
-- 🏢 Mandi Procurement Centre Management
+- 📊 Interactive Dashboard
+- 👨‍🌾 Farmer Management
+- 🏢 Mandi Centre Management
+- 🌾 Procurement Management
 - 🎟️ Farmer Token and Queue Management
-- 📈 Centre Dashboard and Operational Statistics
-- 🔄 Angular Frontend Integration with Spring Boot REST APIs
-- 🗄️ MySQL Database Integration
-- 📡 REST API Testing using Postman
+- 💳 Payment Management Interface
+- 🤖 AI Intelligence Module
+- 📋 Audit Management
+- 📈 Reports and Analytics
+- 🔐 Authentication and Login Interface
+- ⚙️ Application Settings
+- 📊 Dynamic Data Rendering
+- 🎨 Modern Responsive User Interface
 
 ---
 
 ## 🛠️ Technologies Used
 
-### Frontend
+### Framework
+
 - Angular
+
+### Programming Language
+
 - TypeScript
+
+### Frontend Technologies
+
 - HTML
-- SCSS / CSS
-
-### Backend
-- Java
-- Spring Boot
-- Spring Data JPA
-- REST APIs
-
-### Database
-- MySQL
+- CSS
+- Angular Templates
 
 ### Development Tools
+
 - IntelliJ IDEA
-- MySQL Workbench
-- Postman
+- Angular CLI
+- Node.js
+- npm
 - Git
 - GitHub
 
 ---
 
-## 📡 API Features
-
-The backend provides REST APIs for managing and retrieving application data such as:
-
-- 🏢 Mandi Centres
-- 👨‍🌾 Farmer Records
-- 📊 Crop Price Forecasts
-- 🩺 Application Health Status
-
-Example API endpoints:
+## 📁 Project Structure
 
 ```text
-/api/health
-/api/centres
-/api/farmers
-/api/price-forecasts
+src/
+│
+├── app/
+│   │
+│   ├── components/
+│   │   ├── ai-intelligence/
+│   │   ├── audit/
+│   │   ├── centres/
+│   │   ├── dashboard/
+│   │   ├── farmers/
+│   │   ├── layout/
+│   │   ├── login/
+│   │   ├── payments/
+│   │   ├── procurement/
+│   │   ├── queue/
+│   │   ├── reports/
+│   │   └── settings/
+│   │
+│   ├── guards/
+│   ├── models/
+│   ├── pipes/
+│   ├── services/
+│   │
+│   ├── app.config.ts
+│   ├── app.routes.ts
+│   ├── app.html
+│   ├── app.css
+│   └── app.ts
+│
+├── public/
+└── main.ts
 ```
 
-These APIs are integrated with the **Angular frontend** to display application data dynamically on the dashboard.
+---
+
+## 🧩 Angular Concepts Used
+
+This project demonstrates several important **Angular concepts**, including:
+
+- Angular Components
+- Component-Based Architecture
+- TypeScript
+- Data Binding
+- Interpolation
+- Event Binding
+- Property Binding
+- Angular Routing
+- Route Guards
+- Angular Services
+- Models and Interfaces
+- Pipes
+- Dynamic Data Rendering
+- Angular Configuration
+- Angular CLI
 
 ---
 
 ## 🎯 Project Objective
 
-The objective of **Mandi-Connect-AI** is to improve the efficiency and transparency of agricultural procurement processes through technology.
+The objective of **Mandi-Connect-AI** is to create a modern, structured, and user-friendly frontend interface for managing mandi-related operations.
 
-The platform aims to provide a centralized system where mandi centres can manage farmer information, monitor procurement operations, track queues, and access crop price prediction data for better decision-making.
+The project demonstrates how **Angular, TypeScript, HTML, and CSS** can be used together to build a scalable frontend application using a component-based architecture.
 
 ---
 
-## 🏗️ System Architecture
+## 📚 Academic Subject
 
-```text
-Angular Frontend
-        ↓
-Spring Boot REST API
-        ↓
-Spring Data JPA
-        ↓
-MySQL Database
-```
+### **Subject: ANGULAR**
 
-The frontend communicates with the Spring Boot backend using REST APIs, while the backend manages and retrieves application data from the MySQL database.
+This project is developed as part of the academic practical implementation and learning of **Angular frontend development**.
 
 ---
 
 ## 🌱 Project Vision
 
-Mandi-Connect-AI aims to create a smarter and more digitally connected agricultural ecosystem by bringing together **farmers, mandi operations, crop market intelligence, and modern web technologies**.
+Mandi-Connect-AI aims to provide a smart and organized digital interface for agricultural and mandi operations by using modern frontend technologies.
 
-### 🌾 Connecting Farmers, Markets, and Technology for Smarter Agriculture.
+### 🌾 Building Smart Agricultural Interfaces with Angular.
 
 ---
 
-## 👥 Team Project
+## 👨‍💻 Developed Using
 
-**Project Name:** Mandi-Connect-AI           
-**Domain:** Software Technology                    
-**Project Type:** Angular & Spring Boot                             
+**Angular • TypeScript • HTML • CSS**
