@@ -1,30 +1,34 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login';
-import { DashboardComponent } from './components/dashboard/dashboard';
-import { CentresComponent } from './components/centres/centres';
-import { FarmersComponent } from './components/farmers/farmers';
-import { QueueComponent } from './components/queue/queue';
-import { ProcurementComponent } from './components/procurement/procurement';
-import { PaymentsComponent } from './components/payments/payments';
-import { AiIntelligenceComponent } from './components/ai-intelligence/ai-intelligence';
-import { ReportsComponent } from './components/reports/reports';
-import { SettingsComponent } from './components/settings/settings';
-import { AuditComponent } from './components/audit/audit';
-import { authGuard } from './guards/auth.guard';
+import { guestGuard, roleGuard } from './guards';
+import { LoginComponent } from './pages/login';
+import { RegisterComponent } from './pages/register';
+import { PricesComponent } from './pages/prices';
+import { HistoryComponent } from './pages/history';
+import { MandisComponent } from './pages/mandis';
+import { BookComponent } from './pages/book';
+import { OfficerComponent } from './pages/officer';
+import { OfficerPricesComponent } from './pages/officer-prices';
+import { AdminComponent } from './pages/admin';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
-  { path: 'centres', component: CentresComponent, canActivate: [authGuard] },
-  { path: 'farmers', component: FarmersComponent, canActivate: [authGuard] },
-  { path: 'queue', component: QueueComponent, canActivate: [authGuard] },
-  { path: 'procurement', component: ProcurementComponent, canActivate: [authGuard] },
-  { path: 'payments', component: PaymentsComponent, canActivate: [authGuard] },
-  { path: 'ai-intelligence', component: AiIntelligenceComponent, canActivate: [authGuard] },
-  { path: 'ai', redirectTo: 'ai-intelligence', pathMatch: 'full' },
-  { path: 'reports', component: ReportsComponent, canActivate: [authGuard] },
-  { path: 'settings', component: SettingsComponent, canActivate: [authGuard] },
-  { path: 'audit', component: AuditComponent, canActivate: [authGuard] },
-  { path: '**', redirectTo: 'dashboard' }
+  { path: '', redirectTo: 'prices', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent, canActivate: [guestGuard] },
+  { path: 'register', component: RegisterComponent, canActivate: [guestGuard] },
+
+  // any logged-in user
+  { path: 'prices', component: PricesComponent, canActivate: [roleGuard()] },
+  { path: 'history', component: HistoryComponent, canActivate: [roleGuard()] },
+  { path: 'mandis', component: MandisComponent, canActivate: [roleGuard()] },
+
+  // farmer portal
+  { path: 'book', component: BookComponent, canActivate: [roleGuard('FARMER')] },
+
+  // mandi officer portal
+  { path: 'officer', component: OfficerComponent, canActivate: [roleGuard('OFFICER')] },
+  { path: 'officer-prices', component: OfficerPricesComponent, canActivate: [roleGuard('OFFICER')] },
+
+  // admin portal
+  { path: 'admin', component: AdminComponent, canActivate: [roleGuard('ADMIN')] },
+
+  { path: '**', redirectTo: 'prices' }
 ];

@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "agriprocure-admin": {
+    "Mandi-Connect-and-Crop-Prediction": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -57,10 +57,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "agriprocure-admin:build:production"
+              "buildTarget": "Mandi-Connect-and-Crop-Prediction:build:production"
             },
             "development": {
-              "buildTarget": "agriprocure-admin:build:development"
+              "buildTarget": "Mandi-Connect-and-Crop-Prediction:build:development"
             }
           },
           "defaultConfiguration": "development"

@@ -1,24 +1,35 @@
-# MandiConnect AI — Crop Price Prediction & Mandi Connect Platform
+# Mandi Connect Platform and Crop Price Prediction - Frontend (Angular)
 
-College final project prototype for Smart India Hackathon 2026 (SIH26032: Farmer Procurement Scheduling & Status Intelligence).
-It demonstrates crop-price forecasting, mandi operations, farmer scheduling, and procurement-status visibility using simulated data.
+Replace the old `src` folder of your Angular project with the `src` folder of this zip.
+`angular.json`, `package.json` and `public/` stay as they are.
 
-## Development server
+## Run
 
-To start a local development server, run:
+1. Start the Spring Boot backend (port 8080).
+2. In the project folder: `npm install` (only the first time), then `npm start`.
+3. Open http://localhost:4200 - you will see the Login page.
 
-```bash
-npm start
-```
+The backend address is in `src/app/config.ts`.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`.
+## Three portals
 
-## Building
+| Portal | Login (demo) | Pages |
+|--------|--------------|-------|
+| Farmer | mobile `9000000001` / `Farmer@123` (or Register as a new farmer) | Crop Prices, Price History, Mandis, Book Slot (+ my bookings) |
+| Mandi Officer | `bargarh.officer` / `Officer@123` | My Mandi (bookings, check in / complete), Enter Prices, Crop Prices, Price History |
+| Admin | `admin` / `Admin@123` | Admin Panel (numbers, mandis, officers, farmers), Crop Prices, Price History, Mandis |
 
-To build the project run:
+## How login works in the frontend
 
-```bash
-npm run build
-```
+- `auth.service.ts` - login, register, logout; keeps the logged-in user in the browser (localStorage)
+- `auth.interceptor.ts` - adds the token to every request; logs out when the server says the token is not valid
+- `guards.ts` - `roleGuard('FARMER')` etc. open a page only for the right role
+- `app.ts` - top bar shows the menu of the logged-in role
 
-This will compile your project and store the build artifacts in the `dist/` directory.
+## Folder structure
+
+- `app/api.service.ts` - all calls to the backend
+- `app/models.ts` - data types
+- `app/pages/` - one file per page
+- `app/utils.ts`, `app/config.ts`, `app/odisha.ts` - small helpers
+- `styles.css` - styles of the whole project
