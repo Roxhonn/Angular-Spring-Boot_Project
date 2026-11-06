@@ -1,0 +1,11 @@
+name,district,dailyCapacity,status
+Bargarh Mandi,Bargarh,60,OPEN
+Attabira Mandi,Bargarh,40,OPEN
+Padampur Mandi,Bargarh,40,OPEN
+Jeypore Mandi,Koraput,50,OPEN
+Malkangiri Mandi,Malkangiri,30,OPEN
+Bhubaneswar Mandi,Khordha,120,OPEN
+Cuttack Mandi,Cuttack,90,OPEN
+Sambalpur Mandi,Sambalpur,80,OPEN
+Berhampur Mandi,Ganjam,70,OPEN
+Balasore Mandi,Balasore,60,OPEN
