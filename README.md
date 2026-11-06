@@ -116,7 +116,7 @@ This project demonstrates several important **Angular concepts**, including:
 
 ## 🎯 Project Objective
 
-The objective of **Mandi-Connect-AI** is to create a modern, structured, and user-friendly frontend interface for managing mandi-related operations.
+The objective of **Mandi-Connect-AI** is to create a modern, structured and user-friendly frontend interface for managing mandi-related operations.
 
 The project demonstrates how **Angular, TypeScript, HTML, and CSS** can be used together to build a scalable frontend application using a component-based architecture.
 
