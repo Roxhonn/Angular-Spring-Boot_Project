@@ -1,0 +1,271 @@
+
+-- ==========================================
+-- MANDI CONNECT DATABASE
+-- ==========================================
+
+CREATE DATABASE IF NOT EXISTS mandi_connect;
+
+USE mandi_connect;
+
+-- ==========================================
+-- TABLE 1: MANDI CENTRES
+-- ==========================================
+
+CREATE TABLE IF NOT EXISTS mandi_centres (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    centre_code VARCHAR(20) NOT NULL UNIQUE,
+    centre_name VARCHAR(100) NOT NULL, 
+    district VARCHAR(100) NOT NULL,
+    current_queue INT NOT NULL DEFAULT 0,
+    daily_capacity INT NOT NULL,
+    status VARCHAR(30) NOT NULL
+);
+
+-- ==========================================
+-- TABLE 2: FARMERS
+-- ==========================================
+
+CREATE TABLE IF NOT EXISTS farmers (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    farmer_code VARCHAR(30) NOT NULL UNIQUE,
+    farmer_name VARCHAR(100) NOT NULL,
+    crop_name VARCHAR(50) NOT NULL,
+    quantity_tonnes DECIMAL(10,2) NOT NULL,
+    mandi_code VARCHAR(20) NOT NULL,
+    token_number VARCHAR(30),
+    status VARCHAR(30) NOT NULL,
+    CONSTRAINT fk_farmer_mandi
+        FOREIGN KEY (mandi_code)
+        REFERENCES mandi_centres(centre_code)
+);
+
+-- ==========================================
+-- TABLE 3: CROP PRICE FORECASTS
+-- ==========================================
+
+CREATE TABLE IF NOT EXISTS crop_price_forecasts (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    crop_name VARCHAR(50) NOT NULL,
+    mandi_name VARCHAR(100) NOT NULL,
+    current_price DECIMAL(10,2) NOT NULL,
+    predicted_price DECIMAL(10,2) NOT NULL,
+    change_percent DECIMAL(6,2) NOT NULL,
+    trend VARCHAR(30) NOT NULL
+);
+
+-- ==========================================
+-- SAMPLE DATA: MANDI CENTRES
+-- ==========================================
+
+INSERT INTO mandi_centres
+(centre_code, centre_name, district, current_queue, daily_capacity, status)
+VALUES
+('CTR-001', 'Karnal Mandi', 'Karnal', 32, 150, 'CONGESTED'),
+('CTR-002', 'Panipat Grain Mandi', 'Panipat', 18, 140, 'MODERATE'),
+('CTR-003', 'Kurukshetra Mandi', 'Kurukshetra', 8, 160, 'OPTIMAL');
+
+-- ==========================================
+-- SAMPLE DATA: FARMERS
+-- ==========================================
+
+INSERT INTO farmers
+(farmer_code, farmer_name, crop_name, quantity_tonnes,
+ mandi_code, token_number, status)
+VALUES
+('FRM-10245', 'Rajesh Kumar', 'Paddy', 42.50,
+ 'CTR-001', 'KRN-101', 'CHECKED_IN'),
+('FRM-10246', 'Sukhdev Singh', 'Wheat', 65.00,
+ 'CTR-002', 'PNP-102', 'PROCESSING'),
+('FRM-10247', 'Harpreet Kaur', 'Mustard', 38.00,
+ 'CTR-003', 'KKR-095', 'COMPLETED');
+
+-- ==========================================
+-- SAMPLE DATA: CROP PRICE FORECASTS
+-- ==========================================
+
+INSERT INTO crop_price_forecasts
+(crop_name, mandi_name, current_price, predicted_price,
+ change_percent, trend)
+VALUES
+('Paddy', 'Karnal Mandi', 2310, 2380, 3.00, 'UPWARD'),
+('Wheat', 'Panipat Mandi', 2425, 2440, 0.60, 'STABLE'),
+('Mustard', 'Kurukshetra Mandi', 5680, 5795, 2.00, 'UPWARD'),
+('Cotton', 'Ambala Mandi', 6890, 6750, -2.00, 'CAUTION');
+
+-- ==========================================
+-- VERIFY DATA
+-- ==========================================
+
+SHOW TABLES;
+
+SELECT * FROM mandi_centres;
+
+SELECT * FROM farmers;
+
+SELECT * FROM crop_price_forecasts;
+
+-- ==========================================
+-- JOIN: FARMERS WITH THEIR MANDI CENTRES
+-- ==========================================
+
+SELECT
+    f.farmer_code,
+    f.farmer_name,
+    f.crop_name,
+    f.quantity_tonnes,
+    f.token_number,
+    f.status AS farmer_status,
+    m.centre_name,
+    m.district
+FROM farmers f
+JOIN mandi_centres m
+    ON f.mandi_code = m.centre_code;
+
+-- ==========================================
+-- SEARCH FARMERS BY MANDI
+-- ==========================================
+
+SELECT *
+FROM farmers
+WHERE mandi_code = 'CTR-001';
+
+-- ==========================================
+-- SEARCH FORECASTS BY CROP
+-- ==========================================
+
+SELECT *
+FROM crop_price_forecasts
+WHERE crop_name = 'Paddy';
+
+USE mandi_connect;
+
+DESCRIBE farmers;
+DESCRIBE farmers;
+SHOW CREATE TABLE farmers;
+SHOW CREATE TABLE mandi_centres;
+SHOW CREATE TABLE mandis;
+USE mandi_connect;
+
+ALTER TABLE farmers
+MODIFY farmer_code VARCHAR(30) NULL,
+MODIFY farmer_name VARCHAR(100) NULL,
+MODIFY crop_name VARCHAR(50) NULL,
+MODIFY quantity_tonnes DECIMAL(10,2) NULL,
+MODIFY mandi_code VARCHAR(20) NULL,
+MODIFY status VARCHAR(30) NULL;
+
+INSERT INTO farmers (district, mobile, name, village)
+VALUES (?, ?, ?, ?);
+USE mandi_connect;
+
+ALTER TABLE farmers
+MODIFY farmer_name VARCHAR(100) NULL,
+MODIFY crop_name VARCHAR(50) NULL,
+MODIFY quantity_tonnes DECIMAL(10,2) NULL,
+MODIFY mandi_code VARCHAR(20) NULL,
+MODIFY status VARCHAR(30) NULL;
+
+DESCRIBE farmers;
+SELECT * FROM farmers;
+SELECT id, name, district, daily_capacity, status
+FROM mandis;
+
+SELECT
+    u.id,
+    u.name,
+    u.username,
+    u.role,
+    u.mandi_id,
+    m.name AS mandi_name,
+    m.district
+FROM users u
+LEFT JOIN mandis m ON u.mandi_id = m.id
+WHERE u.role = 'OFFICER';
+
+SELECT username, role, active, mandi_id
+FROM users
+WHERE username IN (
+    'jeypore.officer',
+    'Odishagovt.officer'
+);
+SELECT username, role, active, mandi_id
+FROM users
+WHERE username IN (
+    'jeypore.officer',
+    'Odishagovt.officer'
+);
+
+UPDATE users
+SET active = 0
+WHERE username = 'Odishagovt.officer';
+
+SELECT username, role, active, mandi_id
+FROM users
+WHERE username IN (
+    'jeypore.officer',
+    'Odishagovt.officer'
+);
+
+SELECT
+    b.id,
+    b.token,
+    f.name AS farmer_name,
+    m.name AS mandi_name,
+    b.slot_date,
+    b.slot_time,
+    b.status
+FROM bookings b
+JOIN farmers f ON b.farmer_id = f.id
+JOIN mandis m ON b.mandi_id = m.id
+WHERE b.mandi_id = 4
+ORDER BY b.id DESC;
+SELECT
+    b.id,
+    b.token,
+    b.mandi_id,
+    m.name AS mandi_name,
+    b.slot_date,
+    b.slot_time,
+    b.status
+FROM bookings b
+JOIN mandis m ON b.mandi_id = m.id
+WHERE b.mandi_id = 4
+ORDER BY b.id DESC;
+
+SELECT
+    id,
+    token,
+    mandi_id,
+    slot_date,
+    slot_time,
+    status
+FROM bookings
+WHERE mandi_id = 4
+ORDER BY id DESC;
+
+SELECT CURDATE();
+
+SELECT
+    m.id AS mandi_id,
+    m.name AS mandi_name,
+    b.slot_date,
+    b.status,
+    COUNT(b.id) AS total_bookings
+FROM mandis m
+LEFT JOIN bookings b ON b.mandi_id = m.id
+WHERE m.id = 4
+GROUP BY m.id, m.name, b.slot_date, b.status;
+
+SELECT
+    CURDATE() AS today,
+    m.id,
+    m.name,
+    m.daily_capacity,
+    COUNT(b.id) AS booked_today
+FROM mandis m
+LEFT JOIN bookings b
+    ON b.mandi_id = m.id
+    AND b.slot_date = CURDATE()
+    AND b.status != 'CANCELLED'
+WHERE m.id = 4
+GROUP BY m.id, m.name, m.daily_capacity;
